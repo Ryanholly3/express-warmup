@@ -12,8 +12,8 @@ app.get('/cakes', (req, res, next) =>{
 
 cakes.map((cake) =>{
   app.get(`/cake/:id`, (req, res, next) =>{
-    const id = req.params.id
-    res.json({ cake.id })
+    const id = req.params.id;
+    res.json({ cake: cake.id })
   })
 })
 
