@@ -6,15 +6,28 @@ const cakes = require('./data.json')
 
 app.use(bodyParser.urlencoded({extended: false}));
 
-app.get('/cakes', (req, res, next) =>{
+app.get('/', (req, res, next) =>{
+  res.send('🐭')
+})
+
+app.get('/cake', (req, res, next) =>{
   res.json({ cakes })
 })
 
-cakes.map((cake) =>{
-  app.get(`/cake/:id`, (req, res, next) =>{
-    const id = req.params.id;
-    res.json({ cake: cake.id })
-  })
+app.get(`/cake/:id`, (req, res, next) =>{
+  const id = req.params.id;
+  for(let i = 0; i < cakes.length; i++){
+    const cakeChoice = cakes.filter((cake) =>{
+      return cake.id == id
+    })[0];
+  res.json({ cake: cakeChoice })
+  }
+})
+
+app.post('/cake', (req, res) =>{
+  let body = req.body;
+  cakes.push(body);
+  res.json({ cakes: cakes })
 })
 
 app.listen(port, () =>{
